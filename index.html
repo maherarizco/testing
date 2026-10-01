@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BAKE TODAY – Simulasi Jualan Pancake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#9b1c1c;--red2:#7d1414;--cream:#f7f0d4;--peach:#f2d3b0;--ink:#3a0d0d;--ease:cubic-bezier(.22,.8,.24,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--red);overflow-x:hidden;line-height:1.5}
+img,svg{display:block;max-width:100%}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.disp{font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.01em}
+
+/* marquee */
+.mq{background:var(--cream);overflow:hidden;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:.04em;padding:6px 0;border-bottom:1px solid #9b1c1c33}
+.mq.bot{border-top:1px solid #9b1c1c33;border-bottom:0}
+.mq div{display:inline-block;animation:mq 30s linear infinite}
+.mq span{margin:0 14px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* header + hero */
+.top{background:var(--red);padding:0 clamp(16px,4vw,48px) clamp(16px,3vw,32px)}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;color:var(--cream);position:sticky;top:0;z-index:20;background:var(--red)}
+.logo{font-size:34px;line-height:1;color:var(--cream);text-decoration:none}
+nav{display:flex;gap:clamp(14px,3vw,34px);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+nav a{color:var(--cream);text-decoration:none;opacity:.9;transition:opacity .3s}
+nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.cartbtn{background:var(--cream);color:var(--red);border:0;border-radius:99px;padding:7px 16px;font-size:12px;font-weight:700;transition:transform .3s var(--ease)}
+.cartbtn:hover{transform:scale(1.06)}
+.cartbtn.pop{animation:pop .5s var(--ease)}
+@keyframes pop{40%{transform:scale(1.25)}}
+.hero{max-width:1100px;margin:0 auto;border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#f3dcbc,#e7bd8f);aspect-ratio:2.1/1;min-height:240px;position:relative;animation:hin 1.2s var(--ease) both}
+@keyframes hin{from{opacity:0;transform:translateY(24px) scale(.98)}}
+.hero svg{width:100%;height:100%}
+.drip{transform-origin:top;animation:drip 3.2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(.2)}60%,100%{transform:scaleY(1)}}
+.hero h1{position:absolute;left:clamp(14px,3vw,36px);bottom:clamp(12px,3vw,30px);font-size:clamp(28px,6vw,64px);line-height:.95;color:var(--cream);text-shadow:0 2px 0 var(--red2)}
+
+/* products */
+section{padding:clamp(48px,8vw,96px) clamp(16px,4vw,48px)}
+.wrap{max-width:1100px;margin:0 auto}
+.sec-t{font-size:clamp(30px,5vw,52px);line-height:1;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{border:1px solid #9b1c1c66;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;background:#fffaf0;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 30px -18px #9b1c1c88}
+.pv{background:var(--peach);aspect-ratio:1.25/1;display:grid;place-items:center;border-bottom:1px solid #9b1c1c66;position:relative}
+.pv svg{height:82%;transition:transform .6s var(--ease)}
+.card:hover .pv svg{transform:rotate(-5deg) scale(1.05)}
+.badge{position:absolute;top:12px;left:12px;background:var(--red);color:var(--cream);border-radius:99px;font-size:10px;font-weight:700;padding:4px 10px}
+.pb{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pb h3{font-size:22px;line-height:1.1}
+.stars{font-size:11px;font-weight:700}
+.pb p{font-size:13px;opacity:.85;flex:1}
+.price{font-weight:700;font-size:18px}
+.row{display:flex;gap:10px;align-items:center;margin-top:6px}
+.qty{display:flex;align-items:center;border:1px solid var(--red);border-radius:99px;overflow:hidden}
+.qty button{background:none;border:0;width:30px;height:32px;font-size:16px;color:var(--red)}
+.qty button:hover{background:#9b1c1c18}
+.qty b{min-width:22px;text-align:center;font-size:13px}
+.add{flex:1;background:var(--red);color:var(--cream);border:0;border-radius:99px;padding:9px 14px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;transition:background .3s,transform .3s var(--ease)}
+.add:hover{background:var(--red2);transform:translateY(-2px)}
+.add:active{transform:scale(.97)}
+.state{padding:40px;text-align:center;font-weight:500;grid-column:1/-1}
+.sk{height:380px;border-radius:24px;background:linear-gradient(100deg,#9b1c1c10 30%,#9b1c1c22 50%,#9b1c1c10 70%);background-size:200% 100%;animation:sk 1.3s infinite}
+@keyframes sk{to{background-position:-200% 0}}
+
+/* statement */
+.stmt{background:var(--red);color:var(--cream);text-align:center;min-height:70vh;display:grid;place-items:center;position:relative;overflow:hidden}
+.stmt h2{font-family:'DM Sans';font-weight:500;font-size:clamp(22px,3.6vw,38px);line-height:1.2;max-width:520px;text-transform:uppercase;position:relative;z-index:1}
+.tag{position:absolute;border:1px solid var(--cream);border-radius:99px;padding:3px 12px;font-size:10px;text-transform:uppercase;background:var(--red);animation:fl 5s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-10px) rotate(var(--r))}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.st{border:1px solid #9b1c1c66;border-radius:22px;overflow:hidden}
+.st .im{aspect-ratio:1/1.05;display:grid;place-items:center;font-size:90px}
+.st .im i{font-style:normal;transition:transform .6s var(--ease)}
+.st:hover .im i{transform:scale(1.15) rotate(-6deg)}
+.st .tx{padding:16px}
+.pill{display:inline-block;border:1px solid var(--red);border-radius:99px;padding:2px 14px;font-size:12px;font-weight:700;margin-right:8px}
+.st h4{display:inline;font-size:15px}
+.st p{font-size:12px;margin-top:8px}
+
+.big{font-size:clamp(70px,19.5vw,260px);line-height:.9;text-align:center;padding:0 2vw 2vw;white-space:nowrap}
+footer{text-align:center;font-size:12px;padding:0 16px 28px;opacity:.8}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(44px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+.js .rs{opacity:0;transform:scale(.9);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rs.in{opacity:1;transform:none}
+
+/* cart */
+.ov{position:fixed;inset:0;background:#3a0d0d88;opacity:0;pointer-events:none;transition:opacity .4s;z-index:40}
+.ov.on{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--cream);z-index:50;transform:translateX(105%);transition:transform .55s var(--ease);display:flex;flex-direction:column;box-shadow:-20px 0 40px #0004}
+.dr.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:var(--red);color:var(--cream)}
+.dh button{background:none;border:0;color:var(--cream);font-size:26px;line-height:1}
+.db{flex:1;overflow:auto;padding:18px 22px}
+.it{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #9b1c1c33;animation:hin .5s var(--ease)}
+.it div{flex:1;font-size:14px}
+.it small{display:block;opacity:.8}
+.df{padding:18px 22px;border-top:1px solid #9b1c1c33;display:grid;gap:10px}
+.df input,.df textarea{width:100%;padding:10px 14px;border:1px solid var(--red);border-radius:14px;background:#fffaf0;font-size:14px}
+.df textarea{resize:none;height:56px}
+.tot{display:flex;justify-content:space-between;font-weight:700}
+.msg{font-size:13px;font-weight:700;min-height:18px}
+.add:disabled{opacity:.6;cursor:wait}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--red);color:var(--cream);padding:12px 22px;border-radius:99px;font-size:13px;font-weight:700;z-index:60;transition:transform .5s var(--ease)}
+.toast.on{transform:translate(-50%,0)}
+@media(max-width:600px){nav{display:none}.hero{aspect-ratio:1.3/1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv,.js .rs{opacity:1;transform:none}}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<div class="mq" aria-hidden="true"><div id="mq1"></div></div>
+<div class="top">
+  <header>
+    <a class="logo disp" href="#top">Bake Today</a>
+    <nav><a href="#shop">Shop</a><a href="#about">About</a><a href="#cara">Cara Masak</a></nav>
+    <button class="cartbtn" id="cartBtn" aria-label="Buka keranjang">KERANJANG (<span id="cc">0</span>)</button>
+  </header>
+  <div class="hero" id="top">
+    <svg viewBox="0 0 800 380" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tumpukan pancake dengan saus cokelat">
+      <ellipse cx="400" cy="320" rx="300" ry="42" fill="#fffaf0"/><ellipse cx="400" cy="312" rx="240" ry="30" fill="#efe3cc"/>
+      <g stroke="#a55f23" stroke-width="3">
+        <ellipse cx="400" cy="290" rx="190" ry="34" fill="#d99a52"/><rect x="210" y="262" width="380" height="28" fill="#f0c887" stroke="none"/><ellipse cx="400" cy="262" rx="190" ry="34" fill="#f5d59b"/>
+        <ellipse cx="400" cy="244" rx="180" ry="32" fill="#d99a52"/><rect x="220" y="216" width="360" height="28" fill="#f0c887" stroke="none"/><ellipse cx="400" cy="216" rx="180" ry="32" fill="#f5d59b"/>
+        <ellipse cx="400" cy="198" rx="170" ry="30" fill="#d99a52"/><rect x="230" y="172" width="340" height="26" fill="#f0c887" stroke="none"/><ellipse cx="400" cy="172" rx="170" ry="30" fill="#f5d59b"/>
+      </g>
+      <path d="M270 172c20-34 70-44 130-44s112 10 130 44c-30 22-80 28-130 28s-100-6-130-28z" fill="#5a2418"/>
+      <path d="M270 172c10 40 8 62 20 62s10-24 22-8 8 30 22 30 8-40 18-26 20 34 30 6 10-40 28-10 22 30 32 14 4-30 20-4 16 28 26 8-2-40 18-30c-6-18-24-30-40-34z" fill="#5a2418" class="drip"/>
+      <ellipse cx="360" cy="150" rx="70" ry="10" fill="#fff" opacity=".18"/>
+      <rect x="395" y="0" width="12" height="130" rx="6" fill="#5a2418" class="drip"/>
+    </svg>
+    <h1 class="disp">Overthink<br>Tomorrow</h1>
+  </div>
+</div>
+
+<section id="shop">
+  <div class="wrap">
+    <h2 class="sec-t disp rv">Organic pancake &amp; waffle mix</h2>
+    <div class="grid" id="grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+  </div>
+</section>
+
+<section class="stmt" id="about">
+  <span class="tag" style="--r:-6deg;left:22%;top:26%">Pancake</span>
+  <span class="tag" style="--r:8deg;right:24%;top:20%;animation-delay:-1.5s">No hassle</span>
+  <span class="tag" style="--r:-4deg;right:18%;top:40%;animation-delay:-3s">Waffle</span>
+  <span class="tag" style="--r:5deg;left:36%;bottom:26%;animation-delay:-2s">Chef vibes</span>
+  <h2 class="rs">Some things &amp; thoughts about these things take forever, but breakfast shouldn't be one of it</h2>
+</section>
+
+<div class="mq bot" aria-hidden="true"><div id="mq2"></div></div>
+
+<section id="cara">
+  <div class="wrap steps">
+    <article class="st rv"><div class="im" style="background:#f1dcc0"><i>🥣</i></div><div class="tx"><span class="pill">STEP 1</span><h4>Add water</h4><p>Campur air dengan takaran yang pas ke dalam mix BAKE Today.</p></div></article>
+    <article class="st rv" style="--d:.12s"><div class="im" style="background:#ead3b8"><i>🍳</i></div><div class="tx"><span class="pill">STEP 2</span><h4>Bake</h4><p>Tuang adonan ke wajan, masak sampai keemasan sempurna.</p></div></article>
+    <article class="st rv" style="--d:.24s"><div class="im" style="background:#f3e2c6"><i>🥞</i></div><div class="tx"><span class="pill">STEP 3</span><h4>Enjoy</h4><p>Nikmati hangat-hangat, langsung dari wajan ke piring.</p></div></article>
+  </div>
+</section>
+
+<div class="big disp rs" aria-hidden="true">Bake Today</div>
+<footer>Ini hanya simulasi jualan. Tidak ada pembayaran yang diproses.</footer>
+
+<div class="ov" id="ov"></div>
+<aside class="dr" id="dr" aria-label="Keranjang belanja" aria-hidden="true">
+  <div class="dh"><h3 class="disp" style="font-size:24px">Keranjang</h3><button id="cls" aria-label="Tutup keranjang">&times;</button></div>
+  <div class="db" id="items"></div>
+  <div class="df">
+    <div class="tot"><span>Total</span><span id="total">Rp0</span></div>
+    <input id="nm" placeholder="Nama lengkap" autocomplete="name">
+    <input id="wa" placeholder="No. WhatsApp" inputmode="tel" autocomplete="tel">
+    <textarea id="nt" placeholder="Catatan (opsional)"></textarea>
+    <div class="msg" id="msg" role="status"></div>
+    <button class="add" id="co" style="padding:13px">Pesan sekarang</button>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
